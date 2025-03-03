@@ -1,0 +1,12 @@
+{
+    "name": "cypress",
+    "version": "1.0.0",
+    "devDependencies": {
+        "cypress": "14.0.3",
+        "joi": "17.13.3"
+    },
+    "scripts": {
+        "cy:open": "cypress open",
+        "cy:run": "cypress run"
+    }
+}
