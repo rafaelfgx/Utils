@@ -1,0 +1,1 @@
+const deleteUndefinedSearchParams = url => (url = new URL(url), [...url.searchParams.keys()].forEach(key => url.searchParams.get(key) === "undefined" && url.searchParams.delete(key)), url.toString());

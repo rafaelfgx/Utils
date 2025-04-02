@@ -1,0 +1,7 @@
+namespace: NAMESPACE
+name: NAME
+image: REGISTRY/PROJECT/IMAGE
+host: *.HOST.COM
+port: 80
+minReplicas: 1
+maxReplicas: 10
