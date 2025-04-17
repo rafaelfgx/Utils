@@ -1,0 +1,9 @@
+*.bat
+*.md
+*.yaml
+*.yml
+.dockerignore
+.editorconfig
+.git
+.gitignore
+dockerfile
