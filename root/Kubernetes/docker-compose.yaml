@@ -1,0 +1,14 @@
+services:
+  SERVICE:
+    image: IMAGE
+    container_name: CONTAINER
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+    networks:
+      - network
+    ports:
+      - 80:80
+networks:
+  network:

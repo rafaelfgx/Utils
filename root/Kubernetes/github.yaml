@@ -1,0 +1,73 @@
+name: Build and Release
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+env:
+  REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+  AZURE_CLUSTER_NAME: ${{ secrets.AZURE_CLUSTER_NAME }}
+  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+  NAMESPACE: ${{ secrets.NAMESPACE }}
+  IMAGE: ${{ secrets.IMAGE }}
+  NAME: ${{ secrets.NAME }}
+  MANIFESTS: kubernetes
+  DOCKERFILE: dockerfile
+  VERSION: $GITHUB_RUN_NUMBER
+  REPLICAS: 5
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Docker Image Build
+        run: docker build . --file ${{ env.DOCKERFILE }} --tag ${{ env.IMAGE }}
+      - name: Docker Image Tag Version
+        run: docker tag ${{ env.IMAGE }} ${{ env.IMAGE }}:${{ env.VERSION }}
+      - name: Docker Registry Login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY_URL }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+      - name: Docker Registry Push
+        run: docker push --all-tags ${{ env.IMAGE }}
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Azure Kubernetes Context
+        uses: Azure/aks-set-context@v3
+        with:
+          creds: ${{ env.AZURE_CREDENTIALS }}
+          cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
+          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+      - name: Azure Kubernetes Secret
+        uses: Azure/k8s-create-secret@v4
+        with:
+          namespace: ${{ env.NAMESPACE }}
+          container-registry-url: ${{ env.REGISTRY_URL }}
+          container-registry-username: ${{ env.REGISTRY_USERNAME }}
+          container-registry-password: ${{ env.REGISTRY_PASSWORD }}
+          secret-name: secret
+      - name: Kubernetes Manifests Replaces
+        run: |
+          cd ${{ env.MANIFESTS }}
+          sed -i 's/NAMESPACE/${{ env.NAMESPACE }}/g' *.yaml
+          sed -i 's/NAME/${{ env.NAME }}/g' *.yaml
+          sed -i 's/REPLICAS/${{ env.REPLICAS }}/g' *.yaml
+          sed -i 's/IMAGE/${{ env.IMAGE }}/g' *.yaml
+      - name: Azure Kubernetes Deploy
+        uses: Azure/k8s-deploy@v5
+        with:
+          action: deploy
+          namespace: ${{ env.NAMESPACE }}
+          manifests: ${{ env.MANIFESTS }}
+          images: ${{ env.IMAGE }}:${{ env.VERSION }}
+          imagepullsecrets: secret

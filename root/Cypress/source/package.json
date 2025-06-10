@@ -1,0 +1,13 @@
+{
+    "name": "cypress",
+    "version": "1.0.0",
+    "devDependencies": {
+        "cypress": "14.4.1",
+        "joi": "17.13.3"
+    },
+    "scripts": {
+        "update": "npm install -g npm-check-updates && ncu -u",
+        "cy:open": "cypress open",
+        "cy:run": "cypress run"
+    }
+}

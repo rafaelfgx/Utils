@@ -1,0 +1,31 @@
+<Solution>
+    <Folder Name="/Behavioral/">
+        <Project Path="Behavioral/ChainOfResponsibility/ChainOfResponsibility.csproj" />
+        <Project Path="Behavioral/Command/Command.csproj" />
+        <Project Path="Behavioral/Interpreter/Interpreter.csproj" />
+        <Project Path="Behavioral/Iterator/Iterator.csproj" />
+        <Project Path="Behavioral/Mediator/Mediator.csproj" />
+        <Project Path="Behavioral/Memento/Memento.csproj" />
+        <Project Path="Behavioral/Observer/Observer.csproj" />
+        <Project Path="Behavioral/State/State.csproj" />
+        <Project Path="Behavioral/Strategy/Strategy.csproj" />
+        <Project Path="Behavioral/TemplateMethod/TemplateMethod.csproj" />
+        <Project Path="Behavioral/Visitor/Visitor.csproj" />
+    </Folder>
+    <Folder Name="/Creational/">
+        <Project Path="Creational/AbstractFactory/AbstractFactory.csproj" />
+        <Project Path="Creational/Builder/Builder.csproj" />
+        <Project Path="Creational/FactoryMethod/FactoryMethod.csproj" />
+        <Project Path="Creational/Prototype/Prototype.csproj" />
+        <Project Path="Creational/Singleton/Singleton.csproj" />
+    </Folder>
+    <Folder Name="/Structural/">
+        <Project Path="Structural/Adapter/Adapter.csproj" />
+        <Project Path="Structural/Bridge/Bridge.csproj" />
+        <Project Path="Structural/Composite/Composite.csproj" />
+        <Project Path="Structural/Decorator/Decorator.csproj" />
+        <Project Path="Structural/Facade/Facade.csproj" />
+        <Project Path="Structural/Flyweight/Flyweight.csproj" />
+        <Project Path="Structural/Proxy/Proxy.csproj" />
+    </Folder>
+</Solution>

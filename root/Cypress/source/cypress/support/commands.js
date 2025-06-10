@@ -1,0 +1,1 @@
+Cypress.Commands.add("command", () => cy.log("Command executed!"));

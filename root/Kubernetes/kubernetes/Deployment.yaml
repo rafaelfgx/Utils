@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: NAMESPACE
+  name: NAME
+  labels:
+    app: NAME
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: NAME
+  template:
+    metadata:
+      labels:
+        app: NAME
+    spec:
+      nodeSelector:
+        app: NAME
+      containers:
+        - name: NAME
+          image: REGISTRY/PROJECT/IMAGE
+          envFrom:
+            - configMapRef:
+              name: NAME
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 60
+            timeoutSeconds: 10
+            tcpSocket:
+              port: 80
+            httpGet:
+              path: /
+              port: 80
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 60
+            timeoutSeconds: 10
+            tcpSocket:
+              port: 80
+            httpGet:
+              path: /
+              port: 80

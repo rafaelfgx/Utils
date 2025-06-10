@@ -1,0 +1,89 @@
+{
+  "id": "realm",
+  "displayName": "Realm",
+  "realm": "realm",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "clients": [
+    {
+      "name": "Client",
+      "clientAuthenticatorType": "client-secret",
+      "clientId": "client",
+      "secret": "secret",
+      "protocol": "openid-connect",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "fullScopeAllowed": true,
+      "access": {
+        "view": true,
+        "configure": true,
+        "manage": true
+      }
+    }
+  ],
+  "users": [
+    {
+      "firstName": "Admin",
+      "lastName": "Admin",
+      "email": "admin@mail.com",
+      "emailVerified": true,
+      "username": "admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "P@$$w0rd",
+          "temporary": false
+        }
+      ],
+      "enabled": true,
+      "totp": false,
+      "realmRoles": ["admin"]
+    },
+    {
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@mail.com",
+      "emailVerified": true,
+      "username": "user",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "P@$$w0rd",
+          "temporary": false
+        }
+      ],
+      "enabled": true,
+      "totp": false,
+      "realmRoles": ["default"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrative permissions"
+      },
+      {
+        "name": "default",
+        "description": "Default permissions"
+      }
+    ]
+  }
+}
